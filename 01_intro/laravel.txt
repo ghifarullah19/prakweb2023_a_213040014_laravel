@@ -1,0 +1,10 @@
+- Laravel: Web application framework with expressive, elegant syntax
+- Web App Framework: Kerangka yang didesain untuk mendukung pembangunan web app. menyediakan standar/cara untuk membangun web app. untuk otomasi hal umum seperti konek ke db, templating engine, manajemen sesi, autentikasi, keamanan, dll.
+- Dibuat oleh Taylor Otwell, pada Juni 2011. Sebagai alternatif dari CI. Versi terbaru laravel adalah 10.
+- Filosofi: We believe development must be an enjoyable, creative experience to be truly fulfilling. 
+- Tujuan: Laravel aims to make the development process a pleasing one for the developer without sacrificing app functionality. Happy devs make the best code.
+- Fitur: MVC, templating engine, artisan console, eloquent ORM, authentication and authorization, testing, packing system, multiple file system, task scheduling, websocket programming.
+- Ekosistem: vapor, horizon, lumen, valet, forge, dll.
+- Web dibuat dengan laravel: awwwards.com/websites/laravel
+- Pre-requisite: PHP dasar, PHP OO, PHP MVC
+- Software requirement: PHP terbaru, MySQL, Composer, SequelPro/MySQL Workbench, terminal/cmd/powershell/gitbash, VSC, extensions (PHP intelephense, Laravel artisan, Laravel Snippets, Laravel Blade Snippets, Laravel Blade Spacer, Laravel GoTo View).

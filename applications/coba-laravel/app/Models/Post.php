@@ -11,9 +11,15 @@ class Post extends Model
 
     protected $fillable = [
         'title', // Judul
+        'category_id', // Kategori
         'slug',
         'excerpt',
         'body',
     ];
     protected $quarded = ['id'];
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
 }

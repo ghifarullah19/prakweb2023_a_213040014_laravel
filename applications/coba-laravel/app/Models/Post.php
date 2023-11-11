@@ -16,7 +16,9 @@ class Post extends Model
         'excerpt',
         'body',
     ];
+
     protected $quarded = ['id'];
+    protected $with = ['category', 'author'];
 
     public function category()
     {

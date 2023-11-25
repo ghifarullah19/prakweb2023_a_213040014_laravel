@@ -6,8 +6,12 @@
 </div>
 
 <div class="col-lg-8">
-  <form method="POST" action="/dashboard/posts" class="mb-5">
+
+  {{-- form input --}}
+  <form method="POST" action="/dashboard/posts" class="mb-5" enctype="multipart/form-data">
+
     @csrf
+    {{-- title --}}
     <div class="mb-3">
       <label for="title" class="form-label">Title</label>
       <input type="text" class="form-control @error('title')
@@ -19,6 +23,9 @@
       </div>
       @enderror  
     </div>
+    {{-- title --}}
+
+    {{-- slug --}}
     <div class="mb-3">
       <label for="slug" class="form-label">Slug</label>
       <input type="text" class="form-control @error('slug')
@@ -29,6 +36,9 @@
       </div>
       @enderror
     </div>
+    {{-- slug --}}
+
+    {{-- category --}}
     <div class="mb-3">
       <label for="category" class="form-label">Category</label>
       <select class="form-select" name="category_id">
@@ -41,6 +51,22 @@
         @endforeach
       </select>
     </div>
+    {{-- category --}}
+
+    {{-- image --}}
+    <div class="mb-3">
+      <label for="image" class="form-label">Post Image</label>
+      <input class="form-control @error('image')
+      is-invalid @enderror" type="file" id="image" name="image">
+      @error('image')
+      <div class="invalid-feedback">
+        {{ $message }}
+      </div>
+      @enderror
+    </div>
+    {{-- image --}}
+
+    {{-- body --}}
     <div class="mb-3">
       <label for="body" class="form-label">Body</label>
       @error('body')
@@ -49,9 +75,15 @@
       <input id="body" type="hidden" name="body" value="{{ old('body') }}">
       <trix-editor input="body"></trix-editor>
     </div>
+    {{-- body --}}
 
+    {{-- save --}}
     <button type="submit" class="btn btn-primary">Create Post</button>
+    {{-- save --}}
+
   </form>
+  {{-- form input --}}
+
 </div>
 
 <script>

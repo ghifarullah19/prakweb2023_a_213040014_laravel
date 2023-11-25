@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignId("user_id"); // User
             $table->string("title"); // Judul
             $table->string('slug')->unique();
+            $table->string('image')->nullable();
             $table->text("excerpt");
             $table->text("body");
             $table->timestamp("published_at")->nullable();

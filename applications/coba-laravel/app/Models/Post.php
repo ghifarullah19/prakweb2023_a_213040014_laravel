@@ -13,6 +13,7 @@ class Post extends Model
     protected $fillable = [
         'title', // Judul
         'category_id', // Kategori
+        'user_id', // Penulis
         'slug',
         'excerpt',
         'body',

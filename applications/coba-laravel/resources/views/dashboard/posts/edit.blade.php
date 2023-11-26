@@ -10,7 +10,7 @@
 
   <div class="col-lg-8">
     {{-- Form input --}}
-    <form method="POST" action="/dashboard/posts/{{ $post->slug }}" class="mb-5">
+    <form method="POST" action="/dashboard/posts/{{ $post->slug }}" class="mb-5" enctype="multipart/form-data">
       {{-- Menangani method PUT --}}
       @method('put')
       {{-- Menangani penyerangan Cross-Site Request Forgery --}}
@@ -71,8 +71,23 @@
       <div class="mb-3">
         {{-- Label image --}}
         <label for="image" class="form-label">Post Image</label>
+
+        {{-- Mengirim data image lama --}}
+        <input type="hidden" name="oldImage" value="{{ $post->image }}">
+        
+        {{-- Jika ada image lama --}}
+        @if ($post->image)
+          {{-- Tampilkan image tersebut --}}
+          <img src="{{ asset('storage/' . $post->image) }}" class="img-preview img-fluid mb-3 col-sm-5 d-block">
+        {{-- Jika tidak ada --}}
+        @else
+          {{-- Tampilkan image kosong --}}
+          <img class="img-preview img-fluid mb-3 col-sm-5">
+        @endif
+        
         {{-- Input image --}}
-        <input class="form-control @error('image') is-invalid @enderror" type="file" id="image" name="image">
+        <input class="form-control @error('image') is-invalid @enderror" type="file" id="image" name="image" onchange="previewImage()">
+        
         {{-- Menampilkan error jika image tidak valid --}}
         @error('image')
           <div class="invalid-feedback">
@@ -117,6 +132,21 @@
     // Menangani event ketika trix-editor diubah
     document.addEventListener('trix-file-accept', function(e) {
       e.preventDefault();
-    })
+    });
+
+    // Menangani image preview
+    function previewImage() {
+      const image = document.querySelector('#image');
+      const imgPreview = document.querySelector('.img-preview');
+
+      imgPreview.style.display = 'block';
+
+      const oFReader = new FileReader();
+      oFReader.readAsDataURL(image.files[0]);
+
+      oFReader.onload = function(oFREVent) {
+        imgPreview.src = oFREVent.target.result;
+      }
+    }
   </script>
 @endsection

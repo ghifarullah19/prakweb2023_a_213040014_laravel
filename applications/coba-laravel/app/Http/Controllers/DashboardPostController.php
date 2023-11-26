@@ -7,6 +7,7 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use \Cviebrock\EloquentSluggable\Services\SlugService;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 
 // Controller DashboardPostController digunakan untuk mengatur data post di dashboard
 class DashboardPostController extends Controller
@@ -99,6 +100,7 @@ class DashboardPostController extends Controller
         $rules = [
             'title' => 'required|max:255',
             'category_id' => 'required',
+            'image' => 'image|file|max:1024',
             'body' => 'required'
         ];
 
@@ -106,9 +108,20 @@ class DashboardPostController extends Controller
         if ($request->slug != $post->slug) {
             $rules['slug'] = 'required|unique:posts';
         }
-
+        
         // Membuat validasi untuk title, slug, category_id, dan body
         $validatedData = $request->validate($rules);
+        
+        // Jika ada file image yang dikirim dari form create post maka akan disimpan di storage
+        if ($request->file('image')) {
+            // Jika ada file image lama yang dikirim dari form edit post 
+            if ($request->oldImage) {
+                // Maka file image lama akan dihapus dari storage
+                Storage::delete($request->oldImage);
+            }
+            // Menyimpan file image baru ke dalam storage
+            $validatedData['image'] = $request->file('image')->store('post-images');
+        }
 
         // Menambahkan user_id dan excerpt ke dalam array $validatedData
         $validatedData['user_id'] = auth()->user()->id;
@@ -127,6 +140,12 @@ class DashboardPostController extends Controller
     // Method destroy digunakan untuk menghapus data post
     public function destroy(Post $post)
     {
+        // Jika ada file image yang dikirim dari form delete post
+        if ($post->image) {
+            // Maka file image lama akan dihapus dari storage
+            Storage::delete($post->image);
+        }
+
         // Menghapus post yang sudah ada di database berdasarkan id
         Post::destroy($post->id);
 

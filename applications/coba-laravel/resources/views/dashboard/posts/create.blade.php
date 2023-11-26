@@ -67,8 +67,10 @@
       <div class="mb-3">
         {{-- Label image --}}
         <label for="image" class="form-label">Post Image</label>
+        {{-- Image --}}
+        <img src="" alt="" class="img-preview img fluid mb-3 col-sm-5">
         {{-- Input image --}}
-        <input class="form-control @error('image') is-invalid @enderror" type="file" id="image" name="image">
+        <input class="form-control @error('image') is-invalid @enderror" type="file" id="image" name="image" onchange="previewImage()">
         {{-- Menampilkan error jika image tidak valid --}}
         @error('image')
           <div class="invalid-feedback">
@@ -113,6 +115,21 @@
     // Menangani event ketika trix-editor diubah
     document.addEventListener('trix-file-accept', function(e) {
       e.preventDefault();
-    })
+    });
+
+    // Menangani image preview
+    function previewImage() {
+      const image = document.querySelector('#image');
+      const imgPreview = document.querySelector('.img-preview');
+
+      imgPreview.style.display = 'block';
+
+      const oFReader = new FileReader();
+      oFReader.readAsDataURL(image.files[0]);
+
+      oFReader.onload = function(oFREVent) {
+        imgPreview.src = oFREVent.target.result;
+      }
+    }
   </script>
 @endsection
